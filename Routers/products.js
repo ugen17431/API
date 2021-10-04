@@ -5,7 +5,7 @@ var router = express.Router();
 
 
 /* Get the all data from mongodb ugenthar  with mongoose library + express */
-router.get("/",(req,res,next)=>{
+router.get("/",(req,res)=>{
     productModel.find(function(err,response){
         if(err) res.json({message:"error",error:err});
         else if(response===null) res.json({message:"No Product found"});
@@ -14,16 +14,16 @@ router.get("/",(req,res,next)=>{
 });
 
 /* Get the all data from mongodb ugenthar  based on name with mongoose library + express */
-router.get("/searchbyname",(req,res,next)=>{
+router.get("/searchbyname",(req,res)=>{
     productModel.find({productName:req.query.name},function(err,productsfetched){
         if(err) res.json({message:"error",error:err});
-        else if(response===null) res.json({message:"No Product found"});
+        else if(productsfetched===null) res.json({message:"No Product found"});
         else res.json({message:"Product Found by name "+req.query.name,products:productsfetched});
     })
 });
 
 /* Get the all data from mongodb ugenthar  based on _id with mongoose library + express */
-router.get("/searchbyid",(req,res,next)=>{
+router.get("/searchbyid",(req,res)=>{
     productModel.findById({_id:req.query._id},function(err,response){
         if(err) res.json({message:"error",error:err});
         else if(response===null) res.json({message:"No Product found"});
@@ -32,9 +32,6 @@ router.get("/searchbyid",(req,res,next)=>{
 });
 
 
-router.get("/product-details/:id([0-9]{4})",(req,res)=>{
-    res.send("Product Details of "+req.params.id);
-});
 
 /* Post the data to mongodb ugenthar with mongoose library + express */
 
